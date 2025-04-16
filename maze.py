@@ -18,6 +18,10 @@ class Cell:
         self.__x2 = x2
         self.__y2 = y2
         self.__win = win
+        self.center_point = Point(
+            (x1 + x2) / 2, 
+            (y1 + y2) / 2
+        )
         self.has_left_wall = has_left_wall
         self.has_right_wall = has_right_wall
         self.has_top_wall = has_top_wall
@@ -52,3 +56,12 @@ class Cell:
                     Point(self.__x2, self.__y2)
                     )
                 )
+
+    def draw_move(self, to_cell, undo=False):
+        fill_color = "red"
+        if undo:
+            fill_color = "gray"
+        self.__win.draw_line(
+            Line(self.center_point, to_cell.center_point), 
+            fill_color
+        )
