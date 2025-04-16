@@ -2,27 +2,27 @@ from tkinter import BOTH, Canvas, Tk
 
 class Window:
     def __init__(self, height, width):
-        self.__root = Tk()
-        self.__root.title = ("Maze Solver")
-        self.__root.protocol("WM_DELETE_WINDOW", self.close)
-        self.__canvas = Canvas(height=height, width=width)
-        self.__canvas.pack()
-        self.__running = False
+        self._root = Tk()
+        self._root.title = ("Maze Solver")
+        self._root.protocol("WM_DELETE_WINDOW", self.close)
+        self._canvas = Canvas(height=height, width=width)
+        self._canvas.pack()
+        self._running = False
     
     def redraw(self):
-        self.__root.update()
-        self.__root.update_idletasks()
+        self._root.update()
+        self._root.update_idletasks()
 
     def wait_for_close(self):
-        self.__running = True
-        while self.__running == True:
+        self._running = True
+        while self._running == True:
             self.redraw()
     
     def close(self):
-        self.__running = False
+        self._running = False
     
     def draw_line(self, line, fill_color="black"):
-        line.draw(self.__canvas, fill_color)
+        line.draw(self._canvas, fill_color)
 
 class Point:
     def __init__(self, x, y):
@@ -31,10 +31,10 @@ class Point:
 
 class Line:
     def __init__(self, p1, p2):
-        self.__p1 = p1
-        self.__p2 = p2
+        self._p1 = p1
+        self._p2 = p2
     
     def draw(self, canvas, fill_color="black"):
         canvas.create_line(
-            self.__p1.x, self.__p1.y, self.__p2.x, self.__p2.y, fill=fill_color, width=2
+            self._p1.x, self._p1.y, self._p2.x, self._p2.y, fill=fill_color, width=2
         )
