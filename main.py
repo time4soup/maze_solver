@@ -22,7 +22,7 @@ def main():
     # c2.draw_move(c3)
     # c3.draw_move(c4, undo=True)
 
-    m = Maze(10, 10, 5, 4, 20, 20, win)
+    m = Maze(10, 10, 5, 4, 20, 20, win, seed=None)
     win.wait_for_close()
 
 main()
