@@ -123,8 +123,8 @@ class Maze:
             self._cells.append(cell_col)
 
         self._break_entrance_and_exit()
-        #self._break_wall("bottom", 3, 2)
         self._break_wall_r(0,0)
+        self._reset_cells_visited()
         
         for col in self._cells:
             for cell in col:
@@ -154,7 +154,6 @@ class Maze:
             direction = list(neighbors)[rand]
             if not self._cells[neighbors[direction][0]][neighbors[direction][1]].visited:
                 self._break_wall(direction, i, j)
-                print(f"broke wall from ({i}, {j}) {direction} to {neighbors[direction]}")
                 self._break_wall_r(neighbors[direction][0], neighbors[direction][1])
             del neighbors[direction]
 
@@ -189,3 +188,35 @@ class Maze:
                 self._cells[i][j+1].has_top_wall = False
             case _:
                 raise Exception(f"invlaid dir passed to _break_wall(): {dir}")
+    
+    def _reset_cells_visited(self):
+        for i in range(self._num_cols):
+            for j in range(self._num_rows):
+                self._cells[i][j].visited = False
+    
+    def solve(self):
+        return self._solve_r(0, 0)
+    
+    def _solve_r(self, i, j):
+        self._cells[i][j].visited = True
+        print(f"visited: ({i}, {j})")
+        if i == self._num_cols - 1 and j == self._num_rows - 1:
+            return True
+
+        to_visit = []
+        if i > 0 and not self._cells[i][j].has_left_wall:
+            to_visit.append((i-1, j))
+        if i < self._num_cols - 1 and not self._cells[i][j].has_right_wall:
+            to_visit.append((i+1, j))
+        if j > 0 and not self._cells[i][j].has_top_wall:
+            to_visit.append((i, j-1))
+        if j < self._num_rows - 1 and not self._cells[i][j].has_bottom_wall:
+            to_visit.append((i, j+1))
+        
+        while len(to_visit) > 0:
+            cell_to_visit = to_visit.pop()
+            if self._cells[cell_to_visit[0]][cell_to_visit[1]].visited:
+                continue
+            if self._solve_r(cell_to_visit[0], cell_to_visit[1]):
+                return True
+        return False

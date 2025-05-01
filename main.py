@@ -22,7 +22,8 @@ def main():
     # c2.draw_move(c3)
     # c3.draw_move(c4, undo=True)
 
-    m = Maze(10, 10, 5, 4, 20, 20, win, seed=None)
+    m = Maze(10, 10, 5, 4, 20, 20, win, seed=1)
+    print(f"Maze solved: {m.solve()}")
     win.wait_for_close()
 
 main()
